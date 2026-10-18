@@ -238,11 +238,52 @@
     max-width: 90vw;
   }
 
-  .perfume-bottle-wrapper {
+  .user-perfume-frame {
     position: relative;
-    margin-bottom: 1.5rem;
-    filter: drop-shadow(0 14px 28px rgba(183, 110, 121, 0.4));
-    animation: bottleFloat 3s ease-in-out infinite;
+    width: 145px;
+    height: 195px;
+    margin: 0 auto 1.4rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: bottleFloat 3.5s ease-in-out infinite;
+  }
+
+  .perfume-img-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px 999px 24px 24px;
+    overflow: hidden;
+    position: relative;
+    border: 3px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 16px 36px rgba(183, 110, 121, 0.45), 0 0 24px rgba(247, 202, 201, 0.65);
+    background: #fff;
+  }
+
+  .user-perfume-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .frame-shine {
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    transform: skewX(-20deg);
+    animation: shineSweep 4s infinite ease-in-out;
+    pointer-events: none;
+  }
+
+  @keyframes shineSweep {
+    0%, 65% { left: -120%; }
+    100% { left: 220%; }
   }
 
   @keyframes bottleFloat {
@@ -253,11 +294,12 @@
   /* Spray mist droplets animation */
   .spray-mist {
     position: absolute;
-    top: -24px;
-    right: 18px;
+    top: -18px;
+    right: 22px;
     width: 60px;
     height: 40px;
     pointer-events: none;
+    z-index: 3;
   }
 
   .particle {
@@ -806,50 +848,18 @@
   <!-- Luxury Perfume Preloader Screen -->
   <div id="preloader" class="preloader">
     <div class="preloader-content">
-      <div class="perfume-bottle-wrapper">
+      <div class="user-perfume-frame">
         <div class="spray-mist">
           <span class="particle p1">✨</span>
-          <span class="particle p2">💧</span>
-          <span class="particle p3">🌸</span>
+          <span class="particle p2">🌸</span>
+          <span class="particle p3">💧</span>
           <span class="particle p4">✨</span>
-          <span class="particle p5">💧</span>
+          <span class="particle p5">🌸</span>
         </div>
-        <svg class="perfume-svg" viewBox="0 0 120 160" width="105" height="140" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Atomizer Nozzle & Neck -->
-          <rect x="52" y="10" width="16" height="12" rx="3" fill="url(#goldGradient)" />
-          <rect x="56" y="2" width="8" height="8" rx="2" fill="url(#goldGradient)" />
-          <circle cx="68" cy="6" r="1.5" fill="#fff" />
-          <rect x="46" y="22" width="28" height="8" rx="2" fill="url(#goldGradient)" />
-          <!-- Bottle Body Glass -->
-          <path d="M30 38 C30 33 35 30 40 30 L80 30 C85 30 90 33 90 38 L96 138 C96 144 91 150 85 150 L35 150 C29 150 24 144 24 138 Z" fill="rgba(255, 255, 255, 0.45)" stroke="url(#goldGradient)" stroke-width="2.5" />
-          <!-- Perfume Liquid with Animated Fill -->
-          <g clip-path="url(#bottleClip)">
-            <path class="liquid-wave" d="M20 90 Q 40 84, 60 90 T 100 90 L100 155 L20 155 Z" fill="url(#liquidGradient)" />
-          </g>
-          <!-- Glass reflections -->
-          <path d="M32 40 L30 135" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round" />
-          <path d="M37 40 L35 135" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" />
-          <!-- Bottle Label -->
-          <rect x="42" y="70" width="36" height="42" rx="4" fill="rgba(255,255,255,0.85)" stroke="#b76e79" stroke-width="1" />
-          <text x="60" y="87" font-family="'Playfair Display', serif" font-size="7" font-weight="bold" fill="#22223b" text-anchor="middle">AURAFAZ</text>
-          <line x1="48" y1="92" x2="72" y2="92" stroke="#b76e79" stroke-width="0.8" />
-          <text x="60" y="103" font-family="'Poppins', sans-serif" font-size="5" fill="#888" text-anchor="middle">PARFUM</text>
-          <!-- Definitions -->
-          <defs>
-            <clipPath id="bottleClip">
-              <path d="M32 38 C32 34 36 32 41 32 L79 32 C84 32 88 34 88 38 L94 136 C94 142 90 148 84 148 L36 148 C30 148 26 142 26 136 Z" />
-            </clipPath>
-            <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#f7cac9" />
-              <stop offset="50%" stop-color="#b76e79" />
-              <stop offset="100%" stop-color="#e5b382" />
-            </linearGradient>
-            <linearGradient id="liquidGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#f7cac9" stop-opacity="0.9" />
-              <stop offset="100%" stop-color="#b76e79" stop-opacity="0.95" />
-            </linearGradient>
-          </defs>
-        </svg>
+        <div class="perfume-img-wrapper">
+          <img src="assets/perfume-user.png" alt="AuraFaz Luxury Perfume Flacon" class="user-perfume-img">
+          <div class="frame-shine"></div>
+        </div>
       </div>
       <div class="preloader-brand">AuraFaz Fragrance Hub</div>
       <div class="preloader-tagline" id="preloaderStatus">Distilling luxury essences...</div>
