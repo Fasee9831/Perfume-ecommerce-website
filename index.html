@@ -2,166 +2,599 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AuraFaz Fragrance Hub| Central place for perfume lovers</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#22223b">
+<meta name="description" content="AuraFaz Fragrance Hub - Luxury perfumes for every mood. Central place for perfume lovers.">
+<title>AuraFaz Fragrance Hub | Central place for perfume lovers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --main-bg: linear-gradient(135deg, #f7cac9 0%, #92a8d1 100%);
     --main-color: #22223b;
     --accent: #f7cac9;
-    --shadow: 0 8px 32px rgba(34,34,59,0.18);
-    --radius: 1.5rem;
+    --accent-dark: #b76e79;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --shadow: 0 8px 32px rgba(34, 34, 59, 0.14);
+    --radius: 1.25rem;
+    --nav-height: 64px;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     background: var(--main-bg);
     color: var(--main-color);
     transition: background 0.7s;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
   }
 
-  nav {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    background: rgba(255,255,255,0.2);
-    padding: 1rem 0;
+  /* Sticky Glassmorphic Header */
+  .site-header {
     position: sticky;
     top: 0;
-    z-index: 10;
-    box-shadow: var(--shadow);
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 4px 20px rgba(34, 34, 59, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    transition: background 0.3s;
   }
 
-  nav button {
-    background: none;
-    border: none;
-    font-size: 1.2rem;
+  .nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0.65rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: var(--nav-height);
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 700;
     color: var(--main-color);
     cursor: pointer;
-    padding: 0.5rem 1.2rem;
-    border-radius: 8px;
-    transition: background 0.3s, color 0.3s, transform 0.2s;
+    user-select: none;
+    text-decoration: none;
+    letter-spacing: 0.5px;
   }
 
-  nav button.active, nav button:hover {
+  .nav-brand span.sparkle {
+    font-size: 1.2rem;
+    color: var(--accent-dark);
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--main-color);
+    cursor: pointer;
+    padding: 0.5rem 1.15rem;
+    border-radius: 999px;
+    transition: all 0.25s ease;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-btn.active {
     background: var(--main-color);
-    color: var(--accent);
-    transform: scale(1.1);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(34, 34, 59, 0.25);
   }
 
+  /* Hamburger Menu Toggle (Mobile) */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    z-index: 101;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .menu-toggle .bar {
+    display: block;
+    width: 24px;
+    height: 2.5px;
+    background-color: var(--main-color);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+  }
+  .menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+  }
+
+  /* Views and Main Layout */
   .view {
     display: none;
-    min-height: 80vh;
-    padding: 2rem 1rem 3rem 1rem;
+    min-height: calc(100vh - var(--nav-height));
+    padding: 2rem 1.25rem 3.5rem 1.25rem;
     position: relative;
-    animation: fadeIn 0.7s;
+    animation: fadeIn 0.4s ease-out;
+    width: 100%;
+    max-width: 100%;
   }
 
-  .active { display: block; }
+  .view.active {
+    display: block;
+  }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(30px);}
-    to { opacity: 1; transform: translateY(0);}
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  h1, h2 { text-align: center; margin-bottom: 1rem; }
-  h1 { font-size: 3rem; cursor: pointer; transition: 0.3s; }
-  h1:hover { color: var(--accent); transform: scale(1.08) rotate(-2deg); }
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.85rem, 5.5vw, 3rem);
+    text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    color: var(--main-color);
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+    text-align: center;
+    margin-bottom: 1rem;
+    line-height: 1.25;
+    color: var(--main-color);
+  }
 
   .content {
-    max-width: 800px;
+    max-width: 860px;
+    width: 100%;
     margin: 1.5rem auto;
-    background: rgba(255,255,255,0.7);
-    padding: 2rem;
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2rem 2.25rem;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
+    border: 1px solid rgba(255, 255, 255, 0.6);
   }
 
   .img-slot {
     border-radius: var(--radius);
     overflow: hidden;
-    margin: 2rem auto;
+    margin: 1.5rem auto 2rem auto;
     box-shadow: var(--shadow);
-    max-width: 700px;
+    max-width: 720px;
+    width: 100%;
+    background: #fff;
   }
 
   .img-slot img {
     width: 100%;
     height: auto;
     display: block;
-    transition: transform 0.4s, box-shadow 0.3s;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    transition: transform 0.4s;
   }
 
-  .img-slot img:hover { transform: scale(1.12) rotate(-2deg); box-shadow: 0 8px 32px var(--accent); }
+  /* Scent Quiz */
+  #scent-quiz {
+    margin-top: 2rem;
+    padding: 1.6rem 1.4rem;
+    background: #fff6fa;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 18px rgba(247, 202, 201, 0.6);
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(247, 202, 201, 0.5);
+  }
 
-  /* Gallery for About and Products */
+  .quiz-btn-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .quiz-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 10px;
+    background: #22223b;
+    color: #fff6fa;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(34, 34, 59, 0.15);
+  }
+
+  /* Products Gallery & Cards */
   .gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-    gap: 1rem;
-    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1.8rem;
   }
 
   .img-card {
-    border-radius: var(--radius);
+    border-radius: 1rem;
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: transform 0.3s, box-shadow 0.3s;
-    background: #fff6fa;
+    transition: transform 0.25s, box-shadow 0.25s;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(247, 202, 201, 0.4);
   }
 
   .img-card img {
     width: 100%;
-    height: 200px;
+    height: 180px;
     object-fit: cover;
+    display: block;
+    background: #f7f7f7;
   }
 
-  .img-card:hover {
-    transform: scale(1.08);
-    box-shadow: 0 10px 40px var(--accent);
+  .img-card > div {
+    font-weight: 600;
+    color: var(--main-color);
+    font-size: 0.95rem;
+    padding: 0.65rem 0.5rem;
+    text-align: center;
   }
 
   .zoom-on-hover {
-    padding: 0.5rem;
+    padding: 0.75rem 1rem;
     margin: 0.5rem 0;
-    transition: 0.3s;
-    border-radius: 12px;
+    transition: all 0.25s;
+    border-radius: 10px;
     cursor: pointer;
+    background: #fff6fa;
+    border-left: 3px solid var(--accent-dark);
+    font-size: 0.98rem;
+    line-height: 1.45;
   }
 
-  .zoom-on-hover:hover {
-    transform: scale(1.05);
-    background: var(--accent);
+  /* Form Elements */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  input, select, textarea, button {
+    font-family: inherit;
+    font-size: 16px; /* 16px prevents iOS browser auto-zoom on focus */
+  }
+
+  input, select, textarea {
+    padding: 0.75rem 0.9rem;
+    border-radius: 10px;
+    border: 1.5px solid #92a8d1;
+    background: #fff;
     color: var(--main-color);
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  form { display: flex; flex-direction: column; gap: 1rem; }
-  input, button { padding: 0.7rem; border-radius: 8px; border: 1px solid #92a8d1; font-size: 1rem; }
-  input:focus { border: 2px solid var(--main-color); outline: none; box-shadow: var(--shadow); }
-  button { background: var(--main-color); color: var(--accent); border: none; cursor: pointer; font-weight: bold; transition: 0.3s; }
-  button:hover { background: var(--accent); color: var(--main-color); transform: scale(1.05); }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--accent-dark);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(183, 110, 121, 0.2);
+  }
 
-  /* Responsive */
-  @media(max-width:700px){
-    .content, .img-slot, .img-card { width: 95%; margin: 1rem auto; }
-    nav { flex-direction: column; gap: 0.5rem; }
-    h1 { font-size: 2rem; }
+  button {
+    background: var(--main-color);
+    color: var(--accent);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.25s;
+    padding: 0.75rem 1.25rem;
+    border-radius: 10px;
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Booking Grid */
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem 1.25rem;
+    margin-bottom: 1.2rem;
+    align-items: center;
+  }
+
+  .form-row {
+    display: contents;
+  }
+
+  .booking-grid label {
+    font-weight: 600;
+    color: #22223b;
+    font-size: 0.95rem;
+  }
+
+  .booking-grid input,
+  .booking-grid select,
+  .booking-grid textarea {
+    width: 100%;
+  }
+
+  .booking-grid textarea {
+    resize: vertical;
+    min-height: 60px;
+    max-height: 140px;
+  }
+
+  /* Login / Signup Card */
+  .login-card {
+    max-width: 480px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 2.5rem 2.25rem 2rem 2.25rem;
+    background: #fff6fa;
+    border-radius: 1.4rem;
+    box-shadow: 0 8px 30px rgba(231, 210, 216, 0.85);
+    border: 1px solid rgba(247, 202, 201, 0.6);
+  }
+
+  /* Hover micro-interactions (Scoped to hover-capable devices only) */
+  @media (hover: hover) {
+    h1:hover {
+      color: var(--accent-dark);
+      transform: scale(1.03) rotate(-1deg);
+    }
+
+    .nav-btn:hover {
+      background: rgba(34, 34, 59, 0.08);
+      color: var(--main-color);
+    }
+
+    .img-slot img:hover {
+      transform: scale(1.04);
+    }
+
+    .img-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 28px rgba(247, 202, 201, 0.75);
+    }
+
+    .zoom-on-hover:hover {
+      transform: translateX(4px);
+      background: var(--accent);
+      color: var(--main-color);
+    }
+
+    .quiz-btn:hover {
+      background: var(--accent-dark);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    button:hover {
+      filter: brightness(1.08);
+    }
+  }
+
+  /* Tactile feedback for touchscreens */
+  @media (hover: none) {
+    button:active,
+    .nav-btn:active,
+    .quiz-btn:active,
+    .img-card:active {
+      transform: scale(0.97);
+    }
+  }
+
+  /* Mobile Breakpoint: Tablet & Mobile (<= 768px) */
+  @media (max-width: 768px) {
+    :root {
+      --nav-height: 58px;
+    }
+
+    .menu-toggle {
+      display: flex;
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 16px 32px rgba(34, 34, 59, 0.15);
+      padding: 1rem 1.25rem 1.5rem;
+      gap: 0.5rem;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      border-bottom: 1px solid rgba(247, 202, 201, 0.7);
+    }
+
+    .nav-menu.open {
+      max-height: 380px;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .nav-btn {
+      width: 100%;
+      padding: 0.8rem 1.25rem;
+      font-size: 1.05rem;
+      border-radius: 12px;
+      justify-content: flex-start;
+      min-height: 48px;
+    }
+
+    .nav-btn.active {
+      background: var(--main-color);
+      color: #fff;
+    }
+
+    .content {
+      padding: 1.5rem 1.25rem;
+      margin: 1rem auto;
+      border-radius: 1.2rem;
+    }
+
+    .view {
+      padding: 1.25rem 0.85rem 3rem 0.85rem;
+    }
+  }
+
+  /* Small Mobile Devices (<= 600px) */
+  @media (max-width: 600px) {
+    .content {
+      padding: 1.25rem 1rem;
+    }
+
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .img-card img {
+      height: 140px;
+    }
+
+    .img-card > div {
+      font-size: 0.88rem;
+      padding: 0.5rem 0.35rem;
+    }
+
+    .booking-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      align-items: stretch;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      width: 100%;
+    }
+
+    .form-row[style] {
+      grid-column: auto !important;
+    }
+
+    .login-card {
+      padding: 1.6rem 1.25rem 1.5rem 1.25rem;
+      margin: 1rem auto;
+      border-radius: 1.2rem;
+    }
+
+    .quiz-btn-container {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+
+    .quiz-btn {
+      font-size: 0.88rem;
+      padding: 0.65rem 0.5rem;
+    }
+  }
+
+  /* Very Small Devices (<= 340px) */
+  @media (max-width: 340px) {
+    .gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .quiz-btn-container {
+      grid-template-columns: 1fr;
+    }
+
+    .nav-brand {
+      font-size: 1.18rem;
+    }
   }
 </style>
 </head>
 <body>
-  <nav>
-  <button class="active" onclick="showView('login')">Login</button>
-  <button onclick="showView('home')">Home</button>
-  <button onclick="showView('about')">About</button>
-  <button onclick="showView('product')">Product</button>
-  <button onclick="showView('bookings')">Bookings</button>
-  </nav>
+  <header class="site-header">
+    <div class="nav-container">
+      <div class="nav-brand" onclick="showView('home')">
+        <span class="sparkle">✨</span> AuraFaz Fragrance Hub
+      </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <nav id="mainNav" class="nav-menu">
+        <button class="nav-btn active" data-view="login" onclick="showView('login')">Login</button>
+        <button class="nav-btn" data-view="home" onclick="showView('home')">Home</button>
+        <button class="nav-btn" data-view="about" onclick="showView('about')">About</button>
+        <button class="nav-btn" data-view="product" onclick="showView('product')">Product</button>
+        <button class="nav-btn" data-view="bookings" onclick="showView('bookings')">Bookings</button>
+      </nav>
+    </div>
+  </header>
+
   <!-- Home -->
   <section id="home" class="view">
   <h1>AuraFaz Fragrance Hub</h1>
@@ -171,10 +604,10 @@
     <div class="content">
   <p style="font-weight:bold;font-size:1.25rem;text-align:center;margin-bottom:1.2rem;letter-spacing:0.5px;">Discover your signature scent. Luxury perfumes for every mood.</p>
       <!-- Unique Scent Quiz Feature -->
-      <div id="scent-quiz" style="margin-top:2.5rem;padding:1.5rem;background:#fff6fa;border-radius:1.2rem;box-shadow:0 2px 12px #f7cac9a0;max-width:500px;margin-left:auto;margin-right:auto;">
+      <div id="scent-quiz">
         <h3 style="color:#b76e79;text-align:center;font-family:'Playfair Display',serif;margin-bottom:1rem;">Find Your Scent Personality</h3>
         <div id="quiz-question" style="margin-bottom:1rem;font-weight:500;text-align:center;">What mood do you want your perfume to evoke?</div>
-        <div style="display:flex;flex-wrap:wrap;gap:0.7rem;justify-content:center;">
+        <div class="quiz-btn-container">
           <button type="button" class="quiz-btn" onclick="showQuizResult('Fresh & Energetic')">Fresh & Energetic</button>
           <button type="button" class="quiz-btn" onclick="showQuizResult('Romantic & Floral')">Romantic & Floral</button>
           <button type="button" class="quiz-btn" onclick="showQuizResult('Warm & Spicy')">Warm & Spicy</button>
@@ -206,34 +639,34 @@
   <p>At <b>AuraFaz Fragrance Hub</b> | Central place for perfume lovers, we believe fragrance is an art. Our curated collection features the world’s finest perfumes.</p>
 
       <div class="about-timeline" style="margin:2.5rem auto 2.5rem auto;max-width:700px;">
-        <h3 style="text-align:center;color:#b76e79;font-family:'Playfair Display',serif;margin-bottom:1.2rem;">Our Story</h3>
+        <h3 style="text-align:center;color:#b76e79;font-family:'Playfair Display',serif;margin-bottom:1.4rem;">Our Story</h3>
         <ul style="list-style:none;padding:0;margin:0;">
-          <li style="display:flex;align-items:flex-start;gap:1.2rem;margin-bottom:1.5rem;">
-            <div style="min-width:48px;height:48px;background:#f7cac9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;font-weight:bold;box-shadow:0 2px 8px #f7cac9a0;">2018</div>
+          <li style="display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem;">
+            <div style="min-width:50px;width:50px;height:50px;background:#f7cac9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.95rem;color:#fff;font-weight:700;flex-shrink:0;box-shadow:0 3px 10px rgba(247,202,201,0.8);">2018</div>
             <div>
-              <div style="font-weight:600;color:#22223b;">Founded in Mumbai</div>
-              <div style="color:#888;">Our journey began with a passion for rare fragrances and a dream to bring global scents to India.</div>
+              <div style="font-weight:600;color:#22223b;font-size:1.05rem;">Founded in Mumbai</div>
+              <div style="color:#666;font-size:0.92rem;line-height:1.45;">Our journey began with a passion for rare fragrances and a dream to bring global scents to India.</div>
             </div>
           </li>
-          <li style="display:flex;align-items:flex-start;gap:1.2rem;margin-bottom:1.5rem;">
-            <div style="min-width:48px;height:48px;background:#b76e79;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;font-weight:bold;box-shadow:0 2px 8px #b76e79a0;">2020</div>
+          <li style="display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem;">
+            <div style="min-width:50px;width:50px;height:50px;background:#b76e79;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.95rem;color:#fff;font-weight:700;flex-shrink:0;box-shadow:0 3px 10px rgba(183,110,121,0.5);">2020</div>
             <div>
-              <div style="font-weight:600;color:#22223b;">First Boutique Opened</div>
-              <div style="color:#888;">We opened our flagship boutique, offering personalized consultations and exclusive launches.</div>
+              <div style="font-weight:600;color:#22223b;font-size:1.05rem;">First Boutique Opened</div>
+              <div style="color:#666;font-size:0.92rem;line-height:1.45;">We opened our flagship boutique, offering personalized consultations and exclusive launches.</div>
             </div>
           </li>
-          <li style="display:flex;align-items:flex-start;gap:1.2rem;margin-bottom:1.5rem;">
-            <div style="min-width:48px;height:48px;background:#22223b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;font-weight:bold;box-shadow:0 2px 8px #22223b40;">2023</div>
+          <li style="display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem;">
+            <div style="min-width:50px;width:50px;height:50px;background:#22223b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.95rem;color:#fff;font-weight:700;flex-shrink:0;box-shadow:0 3px 10px rgba(34,34,59,0.3);">2023</div>
             <div>
-              <div style="font-weight:600;color:#22223b;">Awarded 'Best Niche Perfume Shop'</div>
-              <div style="color:#888;">Recognized for our curated collection and exceptional service by Fragrance India Awards.</div>
+              <div style="font-weight:600;color:#22223b;font-size:1.05rem;">Awarded 'Best Niche Perfume Shop'</div>
+              <div style="color:#666;font-size:0.92rem;line-height:1.45;">Recognized for our curated collection and exceptional service by Fragrance India Awards.</div>
             </div>
           </li>
-          <li style="display:flex;align-items:flex-start;gap:1.2rem;">
-            <div style="min-width:48px;height:48px;background:#f7cac9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#fff;font-weight:bold;box-shadow:0 2px 8px #f7cac9a0;">2025</div>
+          <li style="display:flex;align-items:flex-start;gap:1rem;">
+            <div style="min-width:50px;width:50px;height:50px;background:#f7cac9;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.95rem;color:#fff;font-weight:700;flex-shrink:0;box-shadow:0 3px 10px rgba(247,202,201,0.8);">2025</div>
             <div>
-              <div style="font-weight:600;color:#22223b;">Expanding Across India</div>
-              <div style="color:#888;">Now serving fragrance lovers nationwide, with new locations and an online experience.</div>
+              <div style="font-weight:600;color:#22223b;font-size:1.05rem;">Expanding Across India</div>
+              <div style="color:#666;font-size:0.92rem;line-height:1.45;">Now serving fragrance lovers nationwide, with new locations and an online experience.</div>
             </div>
           </li>
         </ul>
@@ -409,60 +842,17 @@
             <textarea id="specialNotes" rows="2" placeholder="Any special requests? (optional)"></textarea>
           </div>
         </div>
-  <style>
-    .booking-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 1rem 1.5rem;
-      margin-bottom: 1.2rem;
-    }
-    .form-row {
-      display: contents;
-    }
-    .booking-grid label {
-      align-self: center;
-      font-weight: 500;
-      color: #22223b;
-      margin-bottom: 0.2rem;
-      letter-spacing: 0.01em;
-    }
-    .booking-grid input,
-    .booking-grid select,
-    .booking-grid textarea {
-      width: 100%;
-      padding: 0.6rem 0.7rem;
-      border-radius: 8px;
-      border: 1px solid #92a8d1;
-      font-size: 1rem;
-      margin-bottom: 0.2rem;
-      background: #fff;
-      box-sizing: border-box;
-    }
-    .booking-grid textarea {
-      resize: vertical;
-      min-height: 40px;
-      max-height: 120px;
-    }
-    @media(max-width:600px){
-      .booking-grid {
-        grid-template-columns: 1fr;
-      }
-      .form-row[style] {
-        grid-column: auto !important;
-      }
-    }
-  </style>
-        <div style="background:#f7cac9; color:#22223b; border-radius:1rem; padding:1rem; margin:1rem 0; box-shadow:0 2px 8px #eee;">
-          <b>Price per bottle:</b> <span id="pricePerBottle">₹1,499</span><br>
-          <b>Total price:</b> <span id="totalPrice">₹1,499</span>
+        <div style="background:#f7cac9; color:#22223b; border-radius:1rem; padding:1rem 1.25rem; margin:1.2rem 0; box-shadow:0 2px 8px rgba(0,0,0,0.06); display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; font-size:1.05rem;">
+          <div><b>Price per bottle:</b> <span id="pricePerBottle">₹1,499</span></div>
+          <div><b>Total price:</b> <span id="totalPrice" style="font-weight:700; color:#b76e79;">₹1,499</span></div>
         </div>
         <div id="bookingSummary" style="background:#fff6fa; border-radius:1rem; padding:1rem; margin-bottom:1rem; display:none;"></div>
-        <fieldset style="border:none; margin-bottom:1rem;">
-          <legend style="font-weight:bold; color:#b76e79;">Payment Options</legend>
-          <label><input type="radio" name="payment" value="Online" checked> Online (Credit Card/UPI/PayPal)</label>
-          <label><input type="radio" name="payment" value="COD"> Cash on Delivery</label>
+        <fieldset style="border:none; margin-bottom:1.2rem; display:flex; flex-direction:column; gap:0.5rem;">
+          <legend style="font-weight:bold; color:#b76e79; margin-bottom:0.5rem;">Payment Options</legend>
+          <label style="display:inline-flex; align-items:center; gap:0.6rem; cursor:pointer; padding:0.3rem 0; font-size:0.98rem;"><input type="radio" name="payment" value="Online" checked style="width:auto; min-height:auto;"> Online (Credit Card/UPI/PayPal)</label>
+          <label style="display:inline-flex; align-items:center; gap:0.6rem; cursor:pointer; padding:0.3rem 0; font-size:0.98rem;"><input type="radio" name="payment" value="COD" style="width:auto; min-height:auto;"> Cash on Delivery</label>
         </fieldset>
-        <button type="submit" style="background:#b76e79; color:#fff; font-size:1.2rem;">Book Now</button>
+        <button type="submit" style="background:#b76e79; color:#fff; font-size:1.15rem; width:100%; min-height:48px; border-radius:12px;">Book Now</button>
       </form>
       <div id="bookingConfirmation" style="display:none; text-align:center; margin-top:2rem;">
         <h3 style="color:#b76e79;">Your booking is confirmed!</h3>
@@ -473,13 +863,13 @@
 
   <!-- Login -->
   <section id="login" class="view active">
-  <div style="max-width:520px;width:98vw;margin:3.5rem auto 2.5rem auto;padding:2.7rem 2.7rem 2.2rem 2.7rem;background:#fff6fa;border-radius:1.2rem;box-shadow:0 2px 24px #e7d2d8;">
-      <div style="text-align:center;margin-bottom:2.2rem;">
-        <div style="font-size:2.2rem;font-family:'Playfair Display',serif;font-weight:700;color:#b76e79;letter-spacing:1.5px;margin-bottom:0.2rem;">AuraFaz Fragrance Hub</div>
-        <div style="font-size:1.13rem;color:#b6a6ca;margin-bottom:0.7rem;">Central place for perfume lovers</div>
-        <div style="width:60px;height:3px;background:#f7cac9;margin:1.1rem auto 1.3rem auto;border-radius:2px;"></div>
-        <div style="font-size:1.08rem;color:#22223b;margin-bottom:0.5rem;">Welcome!</div>
-        <div style="font-size:1.05rem;color:#888;margin-bottom:0.7rem;">Experience the world of luxury scents.<br>Please log in to continue.</div>
+    <div class="login-card">
+      <div style="text-align:center;margin-bottom:1.8rem;">
+        <div style="font-size:clamp(1.4rem, 5vw, 2.1rem);font-family:'Playfair Display',serif;font-weight:700;color:#b76e79;letter-spacing:1px;margin-bottom:0.2rem;line-height:1.25;">AuraFaz Fragrance Hub</div>
+        <div style="font-size:1.05rem;color:#7c7287;margin-bottom:0.7rem;">Central place for perfume lovers</div>
+        <div style="width:60px;height:3px;background:#f7cac9;margin:0.8rem auto 1rem auto;border-radius:2px;"></div>
+        <div style="font-size:1.08rem;color:#22223b;margin-bottom:0.4rem;font-weight:600;">Welcome!</div>
+        <div style="font-size:0.95rem;color:#777;line-height:1.45;">Experience the world of luxury scents.<br>Please log in to continue.</div>
       </div>
       <h2 style="text-align:center;margin-bottom:1.2rem;color:#22223b;font-size:1.5rem;">Login</h2>
       <form id="login-form">
@@ -505,20 +895,76 @@
 
 <script>
 
-// Navigation
-function showView(id) {
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  document.querySelector(`nav button[onclick=\"showView('${id}')\"]`).classList.add('active');
-  if(id==='login'){ loginForm.style.display='block'; loginMsg.textContent=''; }
+// Navigation & Mobile Menu
+const menuToggle = document.getElementById('menuToggle');
+const navMenu = document.getElementById('mainNav');
+
+function toggleMobileMenu() {
+  if (!navMenu) return;
+  const isOpen = navMenu.classList.toggle('open');
+  if (menuToggle) {
+    menuToggle.classList.toggle('active', isOpen);
+    menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  }
 }
 
-// Home title hover
+function closeMobileMenu() {
+  if (navMenu && navMenu.classList.contains('open')) {
+    navMenu.classList.remove('open');
+    if (menuToggle) {
+      menuToggle.classList.remove('active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+  }
+}
+
+if (menuToggle) {
+  menuToggle.addEventListener('click', toggleMobileMenu);
+}
+
+// Close mobile menu if clicked outside
+document.addEventListener('click', (e) => {
+  if (navMenu && navMenu.classList.contains('open')) {
+    if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+      closeMobileMenu();
+    }
+  }
+});
+
+// Close mobile menu on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeMobileMenu();
+});
+
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById(id);
+  if (target) target.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const activeBtn = document.querySelector(`.nav-btn[data-view="${id}"]`) || document.querySelector(`.nav-btn[onclick*="'${id}'"]`);
+  if (activeBtn) activeBtn.classList.add('active');
+  
+  if (id === 'login') {
+    if (loginForm) loginForm.style.display = 'block';
+    if (loginMsg) loginMsg.textContent = '';
+  }
+  closeMobileMenu();
+}
+
+// Home title hover (only enabled on devices with a mouse/pointer)
 let homeTitle = document.querySelector('#home h1');
-homeTitle.onmouseenter = ()=>{ homeTitle.style.transform='scale(1.12) rotate(-2deg)'; };
-homeTitle.onmouseleave = ()=>{ homeTitle.style.transform=''; };
+if (homeTitle) {
+  homeTitle.onmouseenter = () => {
+    if (window.matchMedia('(hover: hover)').matches) {
+      homeTitle.style.transform = 'scale(1.05) rotate(-1.5deg)';
+    }
+  };
+  homeTitle.onmouseleave = () => {
+    homeTitle.style.transform = '';
+  };
+}
 
 // Booking price logic
 let prices = {
@@ -531,6 +977,7 @@ let s = document.getElementById('perfumeSelect'),
     bs = document.getElementById('bookingSummary'),
     n = document.getElementById('custName'),
     e = document.getElementById('custEmail'),
+    bookingForm = document.getElementById('bookingForm'),
     loginForm = document.getElementById('login-form'),
     loginMsg = document.getElementById('login-message'),
     signupForm = document.getElementById('signup-form');
@@ -548,8 +995,12 @@ if(s && q) [s,q,n,e].forEach(el=>el.oninput=updatePrice);
 
 function submitBooking(ev) {
   ev.preventDefault();
-  bookingForm.style.display = 'none';
-  document.getElementById('bookingConfirmation').style.display = 'block';
+  if (bookingForm) bookingForm.style.display = 'none';
+  const confirmation = document.getElementById('bookingConfirmation');
+  if (confirmation) {
+    confirmation.style.display = 'block';
+    confirmation.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 
 // Login/Signup
@@ -566,7 +1017,9 @@ document.getElementById('back-to-login').onclick = ()=>{
 signupForm.onsubmit = ev => {
   ev.preventDefault();
   localStorage.setItem('perfumeUser', JSON.stringify({email:signupForm.email.value.trim(), password:signupForm.password.value}));
-  document.getElementById('signup-message').textContent = 'Sign up successful! You can now log in.';
+  const signupMsg = document.getElementById('signup-message');
+  signupMsg.style.color = '#2d6a4f';
+  signupMsg.textContent = 'Sign up successful! You can now log in.';
   setTimeout(()=>{
     signupForm.style.display='none';
     loginForm.style.display='block';
@@ -579,9 +1032,13 @@ loginForm.onsubmit = ev => {
   let email = loginForm.email.value.trim(), pw = loginForm.password.value;
   let u = JSON.parse(localStorage.getItem('perfumeUser')||'null');
   if((email==='perfume@shop.com'&&pw==='fragrance')||(u&&email===u.email&&pw===u.password)){
+    loginMsg.style.color = '#2d6a4f';
     loginMsg.textContent = 'Login successful! Welcome back.';
     loginForm.reset();
     setTimeout(()=>{showView('home');},700);
+  } else {
+    loginMsg.style.color = '#b76e79';
+    loginMsg.textContent = 'Invalid credentials. Please check your email and password.';
   }
 };
 </script>
