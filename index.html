@@ -25,6 +25,18 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Disable text highlighting across the website */
+  ::selection {
+    background: transparent;
+    color: inherit;
+  }
+
+  ::-moz-selection {
+    background: transparent;
+    color: inherit;
   }
 
   html, body {
@@ -41,6 +53,29 @@
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Keep input fields selectable for typing and editing */
+  input, select, textarea, [contenteditable="true"] {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
+
+  input::selection, textarea::selection {
+    background: rgba(183, 110, 121, 0.35);
+    color: inherit;
+  }
+
+  img {
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   /* Sticky Glassmorphic Header */
