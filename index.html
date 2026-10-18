@@ -862,7 +862,7 @@
   <header class="site-header">
     <div class="nav-container">
       <div class="nav-brand" onclick="showView('home')">
-        <span class="sparkle">✨</span> AuraFaz Fragrance Hub
+        <span class="sparkle" onclick="event.stopPropagation(); replayPreloader();" title="Click to replay perfume preloader" style="cursor:pointer; display:inline-block; transition:transform 0.2s;" onmouseenter="this.style.transform='scale(1.3)'" onmouseleave="this.style.transform='scale(1)'">✨</span> AuraFaz Fragrance Hub
       </div>
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
         <span class="bar"></span>
@@ -1429,6 +1429,14 @@ function initPreloader() {
     }
   }, 2400);
 }
+
+// Function to replay preloader anytime on demand
+window.replayPreloader = function() {
+  const preloader = document.getElementById('preloader');
+  if (!preloader) return;
+  preloader.classList.remove('fade-out');
+  initPreloader();
+};
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initPreloader);
