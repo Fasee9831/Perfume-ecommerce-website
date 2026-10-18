@@ -206,24 +206,217 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(1.85rem, 5.5vw, 3rem);
-    text-align: center;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-    color: var(--main-color);
-    cursor: pointer;
-    transition: color 0.3s, transform 0.3s;
+  /* Luxury Perfume Preloader Screen */
+  .preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #fff8fb 0%, #f7cac9 55%, #92a8d1 100%);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1), transform 0.8s cubic-bezier(0.65, 0, 0.35, 1), visibility 0.8s;
   }
 
-  h2 {
+  .preloader.fade-out {
+    opacity: 0;
+    transform: scale(1.05);
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .preloader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    max-width: 90vw;
+  }
+
+  .perfume-bottle-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 14px 28px rgba(183, 110, 121, 0.4));
+    animation: bottleFloat 3s ease-in-out infinite;
+  }
+
+  @keyframes bottleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* Spray mist droplets animation */
+  .spray-mist {
+    position: absolute;
+    top: -24px;
+    right: 18px;
+    width: 60px;
+    height: 40px;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    font-size: 14px;
+    opacity: 0;
+    animation: sprayParticle 2.2s infinite ease-out;
+  }
+
+  .particle.p1 { top: 10px; right: 2px; animation-delay: 0.1s; }
+  .particle.p2 { top: 0px; right: 18px; animation-delay: 0.6s; font-size: 11px; }
+  .particle.p3 { top: -10px; right: 28px; animation-delay: 1.1s; font-size: 13px; }
+  .particle.p4 { top: 6px; right: 34px; animation-delay: 1.6s; font-size: 10px; }
+  .particle.p5 { top: -6px; right: 10px; animation-delay: 1.9s; font-size: 12px; }
+
+  @keyframes sprayParticle {
+    0% {
+      opacity: 0;
+      transform: translate(0, 12px) scale(0.4);
+    }
+    40% {
+      opacity: 0.95;
+      transform: translate(12px, -8px) scale(1.15);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(24px, -24px) scale(0.6);
+    }
+  }
+
+  /* Liquid fill and wave inside bottle */
+  .liquid-wave {
+    animation: liquidSway 3s ease-in-out infinite alternate;
+    transform-origin: center bottom;
+  }
+
+  @keyframes liquidSway {
+    0% { transform: rotate(-2deg) translateY(0); }
+    100% { transform: rotate(2deg) translateY(-2px); }
+  }
+
+  .preloader-brand {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    font-weight: 700;
+    color: var(--main-color);
+    letter-spacing: 1.5px;
+    margin-bottom: 0.4rem;
+    animation: textGlow 2.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes textGlow {
+    0% { opacity: 0.85; filter: drop-shadow(0 0 2px rgba(247, 202, 201, 0.4)); }
+    100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(183, 110, 121, 0.6)); }
+  }
+
+  .preloader-tagline {
+    font-size: 0.95rem;
+    color: #635b70;
+    margin-bottom: 1.4rem;
+    font-style: italic;
+    min-height: 1.5rem;
+    transition: opacity 0.3s;
+  }
+
+  .preloader-progress-bar {
+    width: 200px;
+    max-width: 70vw;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 999px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .preloader-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #f7cac9, #b76e79);
+    border-radius: 999px;
+    transition: width 0.3s ease-out;
+  }
+
+  /* Luxury Type Reveal Styles */
+  h1, h2 {
+    font-family: 'Playfair Display', Georgia, serif;
     text-align: center;
     margin-bottom: 1rem;
     line-height: 1.25;
+    background: linear-gradient(135deg, #22223b 15%, #b76e79 50%, #22223b 85%);
+    background-size: 250% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: luxuryShimmer 6s ease-in-out infinite;
+  }
+
+  @keyframes luxuryShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  h1 {
+    font-size: clamp(1.85rem, 5.5vw, 3rem);
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  h2 {
+    font-size: clamp(1.5rem, 4.5vw, 2.2rem);
+  }
+
+  .hero-tagline {
+    font-weight: 500;
+    font-size: clamp(1.05rem, 2.8vw, 1.3rem);
+    text-align: center;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.4px;
     color: var(--main-color);
+    line-height: 1.6;
+    min-height: 3.2rem;
+  }
+
+  .typewriter-prefix {
+    color: #555;
+  }
+
+  .typewriter-text {
+    color: #b76e79;
+    font-weight: 700;
+    font-family: 'Playfair Display', Georgia, serif;
+    border-bottom: 2px solid rgba(183, 110, 121, 0.4);
+    padding-bottom: 2px;
+    transition: all 0.2s;
+  }
+
+  .typewriter-cursor {
+    display: inline-block;
+    color: var(--accent-dark);
+    font-weight: 300;
+    animation: blinkCursor 0.8s steps(2, start) infinite;
+    margin-left: 2px;
+  }
+
+  @keyframes blinkCursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @media (max-width: 600px) {
+    .mobile-break {
+      display: block;
+    }
+  }
+  @media (min-width: 601px) {
+    .mobile-break {
+      display: none;
+    }
   }
 
   .content {
@@ -610,6 +803,62 @@
 </style>
 </head>
 <body>
+  <!-- Luxury Perfume Preloader Screen -->
+  <div id="preloader" class="preloader">
+    <div class="preloader-content">
+      <div class="perfume-bottle-wrapper">
+        <div class="spray-mist">
+          <span class="particle p1">✨</span>
+          <span class="particle p2">💧</span>
+          <span class="particle p3">🌸</span>
+          <span class="particle p4">✨</span>
+          <span class="particle p5">💧</span>
+        </div>
+        <svg class="perfume-svg" viewBox="0 0 120 160" width="105" height="140" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Atomizer Nozzle & Neck -->
+          <rect x="52" y="10" width="16" height="12" rx="3" fill="url(#goldGradient)" />
+          <rect x="56" y="2" width="8" height="8" rx="2" fill="url(#goldGradient)" />
+          <circle cx="68" cy="6" r="1.5" fill="#fff" />
+          <rect x="46" y="22" width="28" height="8" rx="2" fill="url(#goldGradient)" />
+          <!-- Bottle Body Glass -->
+          <path d="M30 38 C30 33 35 30 40 30 L80 30 C85 30 90 33 90 38 L96 138 C96 144 91 150 85 150 L35 150 C29 150 24 144 24 138 Z" fill="rgba(255, 255, 255, 0.45)" stroke="url(#goldGradient)" stroke-width="2.5" />
+          <!-- Perfume Liquid with Animated Fill -->
+          <g clip-path="url(#bottleClip)">
+            <path class="liquid-wave" d="M20 90 Q 40 84, 60 90 T 100 90 L100 155 L20 155 Z" fill="url(#liquidGradient)" />
+          </g>
+          <!-- Glass reflections -->
+          <path d="M32 40 L30 135" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round" />
+          <path d="M37 40 L35 135" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round" />
+          <!-- Bottle Label -->
+          <rect x="42" y="70" width="36" height="42" rx="4" fill="rgba(255,255,255,0.85)" stroke="#b76e79" stroke-width="1" />
+          <text x="60" y="87" font-family="'Playfair Display', serif" font-size="7" font-weight="bold" fill="#22223b" text-anchor="middle">AURAFAZ</text>
+          <line x1="48" y1="92" x2="72" y2="92" stroke="#b76e79" stroke-width="0.8" />
+          <text x="60" y="103" font-family="'Poppins', sans-serif" font-size="5" fill="#888" text-anchor="middle">PARFUM</text>
+          <!-- Definitions -->
+          <defs>
+            <clipPath id="bottleClip">
+              <path d="M32 38 C32 34 36 32 41 32 L79 32 C84 32 88 34 88 38 L94 136 C94 142 90 148 84 148 L36 148 C30 148 26 142 26 136 Z" />
+            </clipPath>
+            <linearGradient id="goldGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#f7cac9" />
+              <stop offset="50%" stop-color="#b76e79" />
+              <stop offset="100%" stop-color="#e5b382" />
+            </linearGradient>
+            <linearGradient id="liquidGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#f7cac9" stop-opacity="0.9" />
+              <stop offset="100%" stop-color="#b76e79" stop-opacity="0.95" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="preloader-brand">AuraFaz Fragrance Hub</div>
+      <div class="preloader-tagline" id="preloaderStatus">Distilling luxury essences...</div>
+      <div class="preloader-progress-bar">
+        <div class="preloader-progress-fill" id="preloaderProgress"></div>
+      </div>
+    </div>
+  </div>
+
   <header class="site-header">
     <div class="nav-container">
       <div class="nav-brand" onclick="showView('home')">
@@ -637,7 +886,12 @@
       <img src="https://t3.ftcdn.net/jpg/03/05/97/58/360_F_305975810_xtdX41mS4KV7FAEUd1ep5Jnj2XsAloSY.jpg" alt="Perfume bottles">
     </div>
     <div class="content">
-  <p style="font-weight:bold;font-size:1.25rem;text-align:center;margin-bottom:1.2rem;letter-spacing:0.5px;">Discover your signature scent. Luxury perfumes for every mood.</p>
+      <p class="hero-tagline">
+        Discover your signature scent. <br class="mobile-break">
+        <span class="typewriter-prefix">Luxury perfumes for </span>
+        <span class="typewriter-text" id="typewriterText">every mood.</span>
+        <span class="typewriter-cursor">|</span>
+      </p>
       <!-- Unique Scent Quiz Feature -->
       <div id="scent-quiz">
         <h3 style="color:#b76e79;text-align:center;font-family:'Playfair Display',serif;margin-bottom:1rem;">Find Your Scent Personality</h3>
@@ -1076,6 +1330,111 @@ loginForm.onsubmit = ev => {
     loginMsg.textContent = 'Invalid credentials. Please check your email and password.';
   }
 };
+
+// Typewriter Reveal Effect for Hero Tagline
+const typePhrases = [
+  "every mood.",
+  "romantic evenings.",
+  "timeless elegance.",
+  "bold statements.",
+  "fresh everyday luxury."
+];
+
+let typePhraseIndex = 0;
+let typeCharIndex = 0;
+let isDeleting = false;
+let typewriterRunning = false;
+const typeSpeed = 80;
+const deleteSpeed = 40;
+const delayBetweenPhrases = 1800;
+
+function runTypewriter() {
+  const target = document.getElementById('typewriterText');
+  if (!target) return;
+  typewriterRunning = true;
+  const currentPhrase = typePhrases[typePhraseIndex];
+
+  if (isDeleting) {
+    typeCharIndex--;
+    target.textContent = currentPhrase.substring(0, typeCharIndex);
+  } else {
+    typeCharIndex++;
+    target.textContent = currentPhrase.substring(0, typeCharIndex);
+  }
+
+  let nextInterval = isDeleting ? deleteSpeed : typeSpeed;
+
+  if (!isDeleting && typeCharIndex === currentPhrase.length) {
+    nextInterval = delayBetweenPhrases;
+    isDeleting = true;
+  } else if (isDeleting && typeCharIndex === 0) {
+    isDeleting = false;
+    typePhraseIndex = (typePhraseIndex + 1) % typePhrases.length;
+    nextInterval = 400;
+  }
+
+  setTimeout(runTypewriter, nextInterval);
+}
+
+// Luxury Preloader Controller
+function initPreloader() {
+  const preloader = document.getElementById('preloader');
+  const progressFill = document.getElementById('preloaderProgress');
+  const statusText = document.getElementById('preloaderStatus');
+  if (!preloader) {
+    runTypewriter();
+    return;
+  }
+
+  const statuses = [
+    "Distilling luxury essences...",
+    "Blending top, heart & base notes...",
+    "Bottling timeless fragrance...",
+    "Welcome to AuraFaz!"
+  ];
+
+  let currentProgress = 0;
+  let statusIndex = 0;
+
+  const progressInterval = setInterval(() => {
+    currentProgress += Math.floor(Math.random() * 16) + 12;
+    if (currentProgress > 100) currentProgress = 100;
+    if (progressFill) progressFill.style.width = currentProgress + '%';
+
+    if (currentProgress >= 30 && statusIndex === 0) {
+      statusIndex = 1;
+      if (statusText) statusText.textContent = statuses[1];
+    } else if (currentProgress >= 65 && statusIndex === 1) {
+      statusIndex = 2;
+      if (statusText) statusText.textContent = statuses[2];
+    } else if (currentProgress >= 92 && statusIndex === 2) {
+      statusIndex = 3;
+      if (statusText) statusText.textContent = statuses[3];
+    }
+
+    if (currentProgress >= 100) {
+      clearInterval(progressInterval);
+      setTimeout(() => {
+        preloader.classList.add('fade-out');
+        if (!typewriterRunning) runTypewriter();
+      }, 400);
+    }
+  }, 110);
+
+  // Fallback safety timeout so preloader never blocks the user
+  setTimeout(() => {
+    if (preloader && !preloader.classList.contains('fade-out')) {
+      preloader.classList.add('fade-out');
+      if (!typewriterRunning) runTypewriter();
+    }
+  }, 2400);
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initPreloader);
+} else {
+  initPreloader();
+}
 </script>
 </body>
 </html>
